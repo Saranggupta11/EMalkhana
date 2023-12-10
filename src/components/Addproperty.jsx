@@ -6,6 +6,9 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
+import PropertyDetails from "./PropertyDetails";
+import ChainofCustody from "./ChainofCustody";
+import DisposalofProperty from "./DisposalofProperty";
 
 export default function Addproperty() {
   const [value, setValue] = React.useState("1");
@@ -16,9 +19,7 @@ export default function Addproperty() {
   return (
     <div>
       <div className="ml-5">
-        <Stack spacing={2} direction="row">
-          <Button variant="contained">Back</Button>
-        </Stack>
+      <button type="button" class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-lg rounded-xl text-lg px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Back</button>
       </div>
 
       <div className="mt-8 flex">
@@ -38,11 +39,21 @@ export default function Addproperty() {
             </Box>
             <div className="flex justify-center">
               <TabPanel value="1">
-                <div></div>
+                <div>
+                  <PropertyDetails/>
+                </div>
               </TabPanel>
 
-              <TabPanel value="2">Item Two</TabPanel>
-              <TabPanel value="3">Item Three</TabPanel>
+              <TabPanel value="2">
+                <div>
+                  <ChainofCustody/>
+                </div>
+              </TabPanel>
+              <TabPanel value="3">
+                <div>
+                  <DisposalofProperty/>
+                </div>
+                </TabPanel>
             </div>
           </TabContext>
         </Box>

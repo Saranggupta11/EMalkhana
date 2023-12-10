@@ -8,6 +8,7 @@ export default function Dashboard() {
   return (
     <div>
       <Navbar />
+      {/* <Homepage /> */}
       <Addproperty />
     </div>
   );
