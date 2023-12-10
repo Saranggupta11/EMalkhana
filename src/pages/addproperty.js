@@ -45,7 +45,7 @@ export default function Addproperty() {
               </TabPanel>
 
               <TabPanel value="2">
-                <div>
+                <div className="w-15/16">
                   <ChainofCustody/>
                 </div>
               </TabPanel>
