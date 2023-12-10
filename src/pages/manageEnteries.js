@@ -1,6 +1,6 @@
 import React from 'react'
-import ManageEntDetails from './ManageEntDetails'
-import ManageEntDetailsData from './ManageEntDetailsData'
+import ManageEntDetails from '@/components/ManageEntDetails'
+import ManageEntDetailsData from '../components/ManageEntDetailsData'
 const ManageEnteries = () => {
   return (
     <div>

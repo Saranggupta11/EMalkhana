@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Navbar() {
   return (
@@ -24,10 +25,13 @@ export default function Navbar() {
       </div>
 
       <div className="my-9 flex bg-blue-500 justify-center py-3 text-2xl">
-        <div className="text-white mx-20 hover:text-yellow-300">Home</div>
-        <div className="text-white mx-20 hover:text-yellow-300">Add Entry</div>
         <div className="text-white mx-20 hover:text-yellow-300">
-          Manage Entries
+          <Link href="/">Home</Link>
+          </div>
+        <div className="text-white mx-20 hover:text-yellow-300">
+          <Link href="/addproperty">Add Entry</Link></div>
+        <div className="text-white mx-20 hover:text-yellow-300">
+          <Link href="/manageEnteries">Manage Entries</Link>
         </div>
       </div>
     </div>

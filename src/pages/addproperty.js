@@ -6,9 +6,9 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import PropertyDetails from "./PropertyDetails";
-import ChainofCustody from "./ChainofCustody";
-import DisposalofProperty from "./DisposalofProperty";
+import PropertyDetails from "../components/PropertyDetails";
+import ChainofCustody from "../components/ChainofCustody";
+import DisposalofProperty from "../components/DisposalofProperty";
 
 export default function Addproperty() {
   const [value, setValue] = React.useState("1");
