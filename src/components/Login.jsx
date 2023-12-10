@@ -1,26 +1,13 @@
 // pages/login.js
-import axios from "axios";
 import React, { useState } from "react";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/router";
 
-const Login = () => {
+const LoginPage = () => {
   const [userId, setuserId] = useState("");
   const [password, setPassword] = useState("");
-
-  const router = useRouter();
 
   const handleLogin = async () => {
     console.log("userId:", userId);
     console.log("Password:", password);
-    try {
-      const res=await signIn("credentials",{
-        userId,password,redirect:false
-      });
-      router.replace("/dashboard");
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   return (
@@ -33,7 +20,10 @@ const Login = () => {
             </h2>
 
             <div className="relative mb-4">
-              <label htmlFor="userId" className="leading-7 text-sm text-gray-600">
+              <label
+                htmlFor="userId"
+                className="leading-7 text-sm text-gray-600"
+              >
                 userId
               </label>
               <input
@@ -45,7 +35,10 @@ const Login = () => {
               />
             </div>
             <div className="relative mb-4">
-              <label htmlFor="password" className="leading-7 text-sm text-gray-600">
+              <label
+                htmlFor="password"
+                className="leading-7 text-sm text-gray-600"
+              >
                 Password
               </label>
               <input
@@ -58,12 +51,12 @@ const Login = () => {
             </div>
 
             <div className="flex justify-center">
-            <button
-              onClick={handleLogin}
-              className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
-            >
-              Login
-            </button>
+              <button
+                onClick={handleLogin}
+                className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+              >
+                Login
+              </button>
             </div>
           </div>
         </div>
@@ -72,4 +65,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginPage;

@@ -1,16 +1,14 @@
-import React from 'react'
-import Image from 'next/image'
-import Navbar from './Navbar'
-import Homepage from './Homepage'
-import Addproperty from './Addproperty'
+import React from "react";
+import Image from "next/image";
+import Navbar from "./Navbar";
+import Homepage from "./Homepage";
+import Addproperty from "./Addproperty";
 
-export default function dashboard() {
+export default function Dashboard() {
   return (
     <div>
-        <Navbar/>
-        {/* <Homepage /> */}
-        <Addproperty/>        
-
+      <Navbar />
+      <Addproperty />
     </div>
-  )
+  );
 }
