@@ -1,25 +1,41 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import NextAuth from "next-auth/next";
 import dbConnect from "@/db/utils/dbConnect";
+import User from "@/db/model/User";
+import bcrypt from 'bcrypt'
+
 export const authOptions = {
-  session: {
-    stratergy: "jwt",
-  },
   providers: [
     CredentialsProvider({
       name: "Credentials",
       credentials: {},
       async authorize(credentials, req) {
         const { userId, password } = credentials;
-        await dbConnect();
-        const user = await User.findOne({ userId }).clone();
-        if (!user) throw new Error("User not found");
-        const isValid = await user.comparePassword(password);
-        if (!isValid) throw new Error("Invalid password");
-        return user;
+        try{
+          await dbConnect();
+          const user=await User.findOne({userId});
+
+          if(!user){
+            return null;
+          }
+
+          const isValid=await bcrypt.compare(password, user.password);
+
+          if(!isValid){
+            return null;
+          }
+
+          return user;
+        }catch(e){
+          console.log(e);
+        }
       },
     }),
   ],
+  session: {
+    stratergy:"jwt",
+  },
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async signIn(user, account, profile) {
       return true;
@@ -38,4 +54,4 @@ export const authOptions = {
 
 const authHandler = NextAuth(authOptions);
 
-export { authHandler as GET, authHandler as POST };
+export default authHandler;
