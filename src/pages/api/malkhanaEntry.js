@@ -1,36 +1,36 @@
 import dbConnect from "@/db/utils/dbConnect";
-import Case from "@/db/model/MalkhanaEntry";
+import MalkhanaEntry from "@/db/model/MalkhanaEntry";
 
-export default async function caseHandler(req, res) {
+export default async function malkahanaEntryHandler(req, res) {
     try {
         await dbConnect();
     
         const { method } = req || "GET";
-        const { caseId } = req.query;
+        const { mrNo } = req.query;
     
         // if (!method) method = "GET";
     
         switch (method) {
         case "POST":
-            const newCase = await Case.create(req.body);
+            const newCase = await MalkhanaEntry.create(req.body);
             res.status(201).json({
             ok: true,
-            message: `Case ${method}`,
+            message: `MalkhanaEntry ${method}`,
             case: newCase,
             });
             break;
     
         case "GET":
-            const _case = await Case.findOne({ crime_number: caseId }).clone();
+            const _case = await MalkhanaEntry.findOne({ mr_no: mrNo }).populate('properties').exec()
             res.status(200).json({
             ok: true,
-            message: `Case ${method}`,
+            message: `MalkhanaEntry ${method}`,
             _case,
             });
             break;
     
         case "PUT":
-            const updateCase = await Case.findOne({ caseId }).clone();
+            const updateCase = await MalkhanaEntry.findOne({ mr_no:mrNo }).clone();
             if (updateCase) {
             Object.keys(req.body).forEach((key) => {
                 updateCase[key] = req.body[key];
@@ -38,35 +38,35 @@ export default async function caseHandler(req, res) {
             await updateCase.save();
             res.status(200).json({
                 ok: true,
-                message: `Case ${method}`,
+                message: `MalkhanaEntry ${method}`,
                 case: updateCase,
             });
             } else {
             res.status(404).json({
                 ok: false,
-                message: `Case ${method} failed. Case not found`,
+                message: `MalkhanaEntry ${method} failed. MalkhanaEntry not found`,
             });
             }
             break;
         case "DELETE":
-            const deletedCase = await Case.findOneAndDelete({ caseId }).clone();
+            const deletedCase = await MalkhanaEntry.findOneAndDelete({ mr_no:mrNo }).clone();
             if (deletedCase) {
             res.status(200).json({
                 ok: true,
-                message: `Case ${method}`,
+                message: `MalkhanaEntry ${method}`,
                 case: deletedCase,
             });
             } else {
             res.status(404).json({
                 ok: false,
-                message: `Case ${method} failed. Case not found`,
+                message: `MalkhanaEntry ${method} failed. MalkhanaEntry not found`,
             });
             }
             break;
         default:
             res.status(400).json({
             ok: false,
-            message: `Case ${method} failed. Invalid method`,
+            message: `MalkhanaEntry ${method} failed. Invalid method`,
             });
             break;
         }
