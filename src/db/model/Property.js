@@ -7,25 +7,25 @@ const PropertySchema = new Schema({
         default:false
     },
     property_details: {
-        property_category: {
+        categoryOfProperty: {
             type: String,
         },
         quantity: {
             type: Number,
         },
-        belonging_to: {
+        belongingToWhom: {
             type: String,
         },
-        property_nature: {
+        natureOfProperty: {
             type: String,
         },
-        property_location: {
+        locationOfProperty: {
             type: String,
         },
-        property_photos: {
+        photoOfProperty: {
             type: [String],
         },
-        property_description: {
+        propertyDescription: {
             type: String,
         },
     },
@@ -51,10 +51,10 @@ const PropertySchema = new Schema({
         to:{
             type: String,
         },
-        by_whom:{
+        byWhom:{
             type: String,
         },
-        to_whom:{
+        toWhom:{
             type: String,
         },
         documents:{
@@ -62,7 +62,7 @@ const PropertySchema = new Schema({
         },
     }],
     disposal_of_property: {
-        date:{
+        dateoforder:{
             type: Date,
         },
         type:{

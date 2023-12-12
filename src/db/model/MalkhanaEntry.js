@@ -2,20 +2,20 @@ import { Schema, model, models } from 'mongoose';
 
 
 const MalkhanaEntrySchema = new Schema({
-        mr_no: {
+        mrNo: {
             type: String,
             unique:true
         },
-        fir_no:{
+        firNo:{
             type: String,
         },
-        date_of_fir:{
+        dateOfFir:{
             type: Date,
         },
-        date_of_seizure:{
+        dateOfSeizure:{
             type: Date,
         },
-        ps_name:{
+        psName:{
             type: String,
         },
         date:{
@@ -28,19 +28,19 @@ const MalkhanaEntrySchema = new Schema({
             type: String,
         },
     basic_details:{
-        seized_by_officer:{
+        seizedByOfficer:{
             type: String,
         },
-        seized_location:{
+        seizedLocation:{
             type: String,
         },
-        ps_receipt_date_time:{
+        psReceiptDateTime:{
             type: Date,
         },
-        owner_name:{
+        ownerName:{
             type: String,
         },
-        address_of_owner:{
+        addressOfOwner:{
             type: String,
         },
         

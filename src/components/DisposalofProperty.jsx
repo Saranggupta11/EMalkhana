@@ -1,6 +1,15 @@
-import React from 'react'
+import React,{useState} from 'react'
 
 const DisposalofProperty = () => {
+    const [dateoforder, setDateoforder] = useState('')
+    const [type, setType] = useState('')
+    const [io, setIo] = useState('')
+    const [rank, setRank] = useState('')
+    const [documents, setDocuments] = useState([])
+    const [remarks, setRemarks] = useState('')
+
+
+    
   return (
          <div>
         <section class="text-gray-600 body-font">

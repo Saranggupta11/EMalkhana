@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -23,6 +23,20 @@ const ChainofCustody = () => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const [date, setDate] = useState('')
+    const [time, setTime] = useState('')
+    const [purpose, setPurpose] = useState('')
+    const [io, setIo] = useState('')
+    const [rank, setRank] = useState('')
+    const [from, setFrom] = useState('')
+    const [to, setTo] = useState('')
+    const [byWhom, setByWhom] = useState('')
+    const [toWhom, setToWhom] = useState('')
+    const [documents, setDocument] = useState([])
+
+
+
 
   return (
     <>

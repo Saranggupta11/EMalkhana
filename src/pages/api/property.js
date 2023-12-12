@@ -13,7 +13,7 @@ export default async function malkahanaEntryHandler(req, res) {
     
         switch (method) {
         case "POST":
-            const malKhanaEntry=await MalkhanaEntry.findOne({mr_no:mrNo})
+            const malKhanaEntry=await MalkhanaEntry.findOne({mrNo})
             
         if (!malKhanaEntry) {
             // Handle the case where MalkhanaEntry with the given mr_no is not found
