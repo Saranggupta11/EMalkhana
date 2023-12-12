@@ -4,6 +4,8 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
+import ChainofCustody from "./ChainofCustody";
+import { set } from "mongoose";
 
 const style = {
   position: "absolute",
@@ -24,6 +26,26 @@ const ManageEntDetailsData = () => {
   const [openDetails, setOpenDetails] = useState(false);
   const handleOpenDetails = () => setOpenDetails(true);
   const handleCloseDetails = () => setOpenDetails(false);
+
+  const [index, setIndex] = useState(0);
+
+  const [ChainofCustodyOpen, setChainofCustodyOpen] = useState(false);
+  const handleChainOfCustodyOpen = (index) => () => {
+    setChainofCustodyOpen(true);
+    setIndex(index);
+  };
+  const handleChainOfCustodyClose = () => setChainofCustodyOpen(false);
+
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [purpose, setPurpose] = useState("");
+  const [io, setIo] = useState("");
+  const [rank, setRank] = useState("");
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const [byWhom, setByWhom] = useState("");
+  const [toWhom, setToWhom] = useState("");
+  const [documents, setDocument] = useState([]);
 
   const [categoryOfProperty, setCategoryOfProperty] = useState("");
   const [quantity, setQuantity] = useState("");
@@ -68,6 +90,50 @@ const ManageEntDetailsData = () => {
     setMrEntry(data);
     console.log(mrEntry);
     handleOpenDetails();
+  };
+
+  const handleDispose = (index)=> async () => {
+    const propertyId = mrEntry.properties[index]._id;
+    console.log(propertyId);
+    const res = await axios.put(`/api/property/?propertyId=${propertyId}`, {
+      is_disposed: true,
+    });
+
+    console.log(res);
+    alert("Property Disposed Successfully");
+  };
+
+  const handleChainOfCustodyEntry = async () => {
+    const propertyId = mrEntry.properties[index]._id;
+    console.log(propertyId);
+    const res = await axios.put(`/api/property/?propertyId=${propertyId}`, {
+      chain_of_custody: [
+        {
+          date,
+          time,
+          purpose,
+          io,
+          rank,
+          from,
+          to,
+          byWhom,
+          toWhom,
+          documents,
+        },
+      ],
+    });
+    console.log(res);
+    setDate("");
+    setTime("");
+    setPurpose("");
+    setIo("");
+    setRank("");
+    setFrom("");
+    setTo("");
+    setByWhom("");
+    setToWhom("");
+    setDocument([]);
+    alert("Chain of Custody Added Successfully");
   };
 
   useEffect(() => {
@@ -327,31 +393,304 @@ const ManageEntDetailsData = () => {
                               <div className="">Property Details</div>
                               {mrEntry.properties.map((property, index) => (
                                 <div key={index}>
-                                    <div>Property : {index+1}</div>
+                                  <div>Property : {index + 1}</div>
+                                  {property.is_disposed ? (
+                                    <div className="text-red-500">Disposed</div>
+                                  ) : (
+                                    <button
+                                      type="button"
+                                      onClick={handleDispose(index)}
+                                      class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-lg rounded-xl text-lg px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                                    >
+                                      dispose
+                                    </button>
+                                  )}
+
+                                  <button
+                                    type="button"
+                                    onClick={handleChainOfCustodyOpen(index)}
+                                    class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-lg rounded-xl text-lg px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                                  >
+                                    Add
+                                  </button>
                                   <div>
-                                    Category of Property :{
+                                    Category of Property :
+                                    {
                                       property.property_details
                                         .categoryOfProperty
                                     }
                                   </div>
                                   <div>
-                                  Belonging to Whom:{
-                                      property.property_details
-                                        .belongingToWhom
-                                    }
+                                    Belonging to Whom:
+                                    {property.property_details.belongingToWhom}
                                   </div>
                                   <div>
-                                  Nature of Property:{
-                                      property.property_details
-                                        .natureOfProperty
-                                    }
+                                    Nature of Property:
+                                    {property.property_details.natureOfProperty}
                                   </div>
                                   <div>
-                                  location of Property: {
+                                    location of Property:{" "}
+                                    {
                                       property.property_details
                                         .locationOfProperty
                                     }
                                   </div>
+                                  <div className="text-lg text-center font-bold">
+                                    Chain of Custody
+                                  </div>
+                                  {property.chain_of_custody.map(
+                                    (coc, index) => (
+                                      <div key={index}>
+                                        <div className="font-bold">Chain of Custody : {index + 1}</div>
+                                        <div>Date: {coc.date}</div>
+                                        <div>Time: {coc.time}</div>
+                                        <div>Purpose: {coc.purpose}</div>
+                                      </div>
+                                    )
+                                  )}
+                                  <Modal
+                                    open={ChainofCustodyOpen}
+                                    onClose={handleChainOfCustodyClose}
+                                    aria-labelledby="modal-modal-title"
+                                    aria-describedby="modal-modal-description"
+                                  >
+                                    <Box sx={style}>
+                                      <Typography
+                                        id="modal-modal-title"
+                                        variant="h6"
+                                        component="h2"
+                                      >
+                                        <div className="bg-yellow-500 text-white pl-3 flex justify-end gap-x-96">
+                                          <div className="py-5">
+                                            Chain of Custody #1
+                                          </div>
+                                          <div className="p-3">
+                                            <button
+                                              onClick={
+                                                handleChainOfCustodyClose
+                                              }
+                                            >
+                                              {" "}
+                                              <CloseIcon />
+                                            </button>
+                                          </div>
+                                        </div>
+                                      </Typography>
+                                      <Typography
+                                        id="modal-modal-description"
+                                        sx={{ mt: 2 }}
+                                      >
+                                        <section class="text-gray-600 body-font">
+                                          <div class="container px-5 pt-8 mx-auto">
+                                            <div class="flex lg:w-full w-full sm:flex-row flex-col mx-auto px-8 sm:space-x-4 sm:space-y-0 space-y-4 sm:px-0 items-end">
+                                              <div class="relative flex-grow w-full mx-5">
+                                                <label
+                                                  for="date"
+                                                  class="leading-7 text-sm text-gray-600"
+                                                >
+                                                  Date
+                                                </label>
+                                                <input
+                                                  type="date"
+                                                  id="date"
+                                                  value={date}
+                                                  onChange={(e) =>
+                                                    setDate(e.target.value)
+                                                  }
+                                                  name="date"
+                                                  class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-transparent focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                                />
+                                              </div>
+                                              <div class="relative flex-grow w-full">
+                                                <label
+                                                  for="time"
+                                                  class="leading-7 text-sm text-gray-600"
+                                                >
+                                                  Time
+                                                </label>
+                                                <input
+                                                  type="time"
+                                                  id="time"
+                                                  value={time}
+                                                  onChange={(e) =>
+                                                    setTime(e.target.value)
+                                                  }
+                                                  name="time"
+                                                  class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-transparent focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                                />
+                                              </div>
+                                              <div class="relative flex-grow w-full">
+                                                <label
+                                                  for="purpose"
+                                                  class="leading-7 text-sm text-gray-600"
+                                                >
+                                                  Purpose
+                                                </label>
+                                                <input
+                                                  type="text"
+                                                  id="purpose"
+                                                  value={purpose}
+                                                  onChange={(e) =>
+                                                    setPurpose(e.target.value)
+                                                  }
+                                                  name="purpose"
+                                                  class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-transparent focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                                />
+                                              </div>
+                                              <div class="relative flex-grow w-full">
+                                                <label
+                                                  for="officer"
+                                                  class="leading-7 text-sm text-gray-600"
+                                                >
+                                                  Investigating Officer
+                                                </label>
+                                                <input
+                                                  type="text"
+                                                  id="officer"
+                                                  value={io}
+                                                  onChange={(e) =>
+                                                    setIo(e.target.value)
+                                                  }
+                                                  name="officer"
+                                                  class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-transparent focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                                />
+                                              </div>
+                                            </div>
+                                          </div>
+
+                                          <div class="container px-5 pt-4 mx-auto">
+                                            <div class="flex lg:w-full w-full sm:flex-row flex-col mx-auto px-8 sm:space-x-4 sm:space-y-0 space-y-4 sm:px-0 items-end">
+                                              <div class="relative flex-grow w-full mx-5">
+                                                <label
+                                                  for="rank"
+                                                  class="leading-7 text-sm text-gray-600"
+                                                >
+                                                  Rank
+                                                </label>
+                                                <input
+                                                  type="text"
+                                                  id="rank"
+                                                  value={rank}
+                                                  onChange={(e) =>
+                                                    setRank(e.target.value)
+                                                  }
+                                                  name="rank"
+                                                  class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-transparent focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                                />
+                                              </div>
+                                              <div class="relative flex-grow w-full">
+                                                <label
+                                                  for="from"
+                                                  class="leading-7 text-sm text-gray-600"
+                                                >
+                                                  From
+                                                </label>
+                                                <input
+                                                  type="text"
+                                                  id="from"
+                                                  value={from}
+                                                  onChange={(e) =>
+                                                    setFrom(e.target.value)
+                                                  }
+                                                  name="from"
+                                                  class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-transparent focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                                />
+                                              </div>
+                                              <div class="relative flex-grow w-full">
+                                                <label
+                                                  for="to"
+                                                  class="leading-7 text-sm text-gray-600"
+                                                >
+                                                  To
+                                                </label>
+                                                <input
+                                                  type="text"
+                                                  id="to"
+                                                  value={to}
+                                                  onChange={(e) =>
+                                                    setTo(e.target.value)
+                                                  }
+                                                  name="to"
+                                                  class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-transparent focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                                />
+                                              </div>
+                                              <div class="relative flex-grow w-full">
+                                                <label
+                                                  for="whom"
+                                                  class="leading-7 text-sm text-gray-600"
+                                                >
+                                                  By Whom
+                                                </label>
+                                                <input
+                                                  type="text"
+                                                  id="whom"
+                                                  value={byWhom}
+                                                  onChange={(e) =>
+                                                    setByWhom(e.target.value)
+                                                  }
+                                                  name="whom"
+                                                  class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-transparent focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                                />
+                                              </div>
+                                            </div>
+                                          </div>
+
+                                          <div class="container px-5 pt-4 pb-10 mx-auto">
+                                            <div class="flex lg:w-full w-full sm:flex-row flex-col mx-auto px-8 sm:space-x-4 sm:space-y-0 space-y-4 sm:px-0 items-end">
+                                              <div class="relative flex-grow w-full mx-5">
+                                                <label
+                                                  for="toWhom"
+                                                  class="leading-7 text-sm text-gray-600"
+                                                >
+                                                  To Whom
+                                                </label>
+                                                <input
+                                                  type="text"
+                                                  id="toWhom"
+                                                  value={toWhom}
+                                                  onChange={(e) =>
+                                                    setToWhom(e.target.value)
+                                                  }
+                                                  name="toWhom"
+                                                  class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-transparent focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                                />
+                                              </div>
+                                              <div class="relative flex-grow w-full">
+                                                <label
+                                                  for="from"
+                                                  class="leading-7 text-sm text-gray-600"
+                                                >
+                                                  Document (maximum file size
+                                                  2MB)
+                                                </label>
+                                                <input
+                                                  type="file"
+                                                  id="from"
+                                                  value={documents}
+                                                  onChange={(e) =>
+                                                    setDocument(e.target.value)
+                                                  }
+                                                  name="from"
+                                                  class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-transparent focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                                />
+                                              </div>
+                                              <div class="relative flex-grow w-full">
+                                                <button
+                                                  type="button"
+                                                  onClick={
+                                                    handleChainOfCustodyEntry
+                                                  }
+                                                  class="text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-300 font-lg rounded-xl text-lg px-5 py-2.5 me-2 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 focus:outline-none dark:focus:ring-yellow-800"
+                                                >
+                                                  Add
+                                                </button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </section>
+                                      </Typography>
+                                    </Box>
+                                  </Modal>
                                 </div>
                               ))}
                             </Box>
