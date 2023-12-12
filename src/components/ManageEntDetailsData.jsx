@@ -390,61 +390,72 @@ const ManageEntDetailsData = () => {
                                   </div>
                                 </div>
                               </Typography>
-                              <div className="">Property Details</div>
+                                <div className="mb-2 font-semibold text-lg text-center">Property Details</div>
                               {mrEntry.properties.map((property, index) => (
-                                <div key={index}>
-                                  <div>Property : {index + 1}</div>
+                                <div key={index} className="">
+                                  <div className="flex justify-center"><div><span className="font-bold">Property </span>: {index + 1}</div></div>
+                                  <div className="flex justify-center gap-x-5 mt-2">
                                   {property.is_disposed ? (
-                                    <div className="text-red-500">Disposed</div>
+                                    <div className="flex justify-center">
+                                    <div className="text-red-600 font-semibold">Disposed</div></div>
                                   ) : (
+                                   
                                     <button
                                       type="button"
                                       onClick={handleDispose(index)}
-                                      class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-lg rounded-xl text-lg px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                                      class="text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-300 font-lg rounded-md text-md px-2 py-2 my-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 focus:outline-none dark:focus:ring-yellow-800"
                                     >
-                                      dispose
+                                      Dispose
                                     </button>
                                   )}
-
                                   <button
                                     type="button"
                                     onClick={handleChainOfCustodyOpen(index)}
-                                    class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-lg rounded-xl text-lg px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                                    class="text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-300 font-lg rounded-md text-md px-2 py-2 mb- dark:bg-yellow-600 dark:hover:bg-yellow-700 focus:outline-none dark:focus:ring-yellow-800"
                                   >
                                     Add
                                   </button>
+                                  </div>
+                                  <div className="flex justify-around">
                                   <div>
-                                    Category of Property :
+                                    <span className="font-bold">Category of Property </span> :
                                     {
                                       property.property_details
                                         .categoryOfProperty
                                     }
                                   </div>
                                   <div>
-                                    Belonging to Whom:
+                                  <span className="font-bold">Belonging to Whom </span>:
                                     {property.property_details.belongingToWhom}
                                   </div>
+                                  </div>
+                                  <div className="flex justify-around mt-2">
                                   <div>
-                                    Nature of Property:
+                                  <span className="font-bold">Nature of Property</span>:
                                     {property.property_details.natureOfProperty}
                                   </div>
                                   <div>
-                                    location of Property:{" "}
+                                  <span className="font-bold">Location of Property </span>:{" "}
                                     {
                                       property.property_details
                                         .locationOfProperty
                                     }
+                                  </div>
                                   </div>
                                   <div className="text-lg text-center font-bold">
                                     Chain of Custody
                                   </div>
                                   {property.chain_of_custody.map(
                                     (coc, index) => (
-                                      <div key={index}>
-                                        <div className="font-bold">Chain of Custody : {index + 1}</div>
-                                        <div>Date: {coc.date}</div>
-                                        <div>Time: {coc.time}</div>
-                                        <div>Purpose: {coc.purpose}</div>
+                                      <div className="mt-2" key={index}>
+                                        <div className="flex justify-around">
+                                        <div><span className="font-bold">Chain of Custody </span>: {index + 1}</div>
+                                        <div><span className="font-bold">Date </span>: {coc.date}</div>
+                                        </div>
+                                        <div className="flex justify-around mt-1">
+                                        <div><span className="font-bold">Time </span>: {coc.time}</div>
+                                        <div><span className="font-bold">Purpose </span>: {coc.purpose}</div>
+                                        </div>
                                       </div>
                                     )
                                   )}
@@ -692,6 +703,7 @@ const ManageEntDetailsData = () => {
                                     </Box>
                                   </Modal>
                                 </div>
+
                               ))}
                             </Box>
                           </Modal>
