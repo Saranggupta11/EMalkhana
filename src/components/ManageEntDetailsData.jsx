@@ -92,7 +92,7 @@ const ManageEntDetailsData = () => {
     handleOpenDetails();
   };
 
-  const handleDispose = (index)=> async () => {
+  const handleDispose = (index) => async () => {
     const propertyId = mrEntry.properties[index]._id;
     console.log(propertyId);
     const res = await axios.put(`/api/property/?propertyId=${propertyId}`, {
@@ -242,6 +242,7 @@ const ManageEntDetailsData = () => {
                           <Modal
                             open={openDetails}
                             onClose={handleCloseDetails}
+                            style={{ overflow: "auto" }}
                             aria-labelledby="modal-modal-title"
                             aria-describedby="modal-modal-description"
                           >
@@ -390,57 +391,86 @@ const ManageEntDetailsData = () => {
                                   </div>
                                 </div>
                               </Typography>
-                                <div className="mb-2 font-semibold text-lg text-center">Property Details</div>
+                              <div className="mb-2 font-semibold text-lg text-center">
+                                Property Details
+                              </div>
                               {mrEntry.properties.map((property, index) => (
                                 <div key={index} className="">
-                                  <div className="flex justify-center"><div><span className="font-bold">Property </span>: {index + 1}</div></div>
+                                  <div className="flex justify-center">
+                                    <div>
+                                      <span className="font-bold">
+                                        Property{" "}
+                                      </span>
+                                      : {index + 1}
+                                    </div>
+                                  </div>
                                   <div className="flex justify-center gap-x-5 mt-2">
-                                  {property.is_disposed ? (
-                                    <div className="flex justify-center">
-                                    <div className="text-red-600 font-semibold">Disposed</div></div>
-                                  ) : (
-                                   
+                                    {property.is_disposed ? (
+                                      <div className="flex justify-center">
+                                        <div className="text-red-600 font-semibold">
+                                          Disposed
+                                        </div>
+                                      </div>
+                                    ) : (
+                                      <button
+                                        type="button"
+                                        onClick={handleDispose(index)}
+                                        class="text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-300 font-lg rounded-md text-md px-2 py-2 my-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 focus:outline-none dark:focus:ring-yellow-800"
+                                      >
+                                        Dispose
+                                      </button>
+                                    )}
                                     <button
                                       type="button"
-                                      onClick={handleDispose(index)}
-                                      class="text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-300 font-lg rounded-md text-md px-2 py-2 my-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 focus:outline-none dark:focus:ring-yellow-800"
+                                      onClick={handleChainOfCustodyOpen(index)}
+                                      class="text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-300 font-lg rounded-md text-md px-2 py-2 mb- dark:bg-yellow-600 dark:hover:bg-yellow-700 focus:outline-none dark:focus:ring-yellow-800"
                                     >
-                                      Dispose
+                                      Add
                                     </button>
-                                  )}
-                                  <button
-                                    type="button"
-                                    onClick={handleChainOfCustodyOpen(index)}
-                                    class="text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-300 font-lg rounded-md text-md px-2 py-2 mb- dark:bg-yellow-600 dark:hover:bg-yellow-700 focus:outline-none dark:focus:ring-yellow-800"
-                                  >
-                                    Add
-                                  </button>
                                   </div>
                                   <div className="flex justify-around">
-                                  <div>
-                                    <span className="font-bold">Category of Property </span> :
-                                    {
-                                      property.property_details
-                                        .categoryOfProperty
-                                    }
-                                  </div>
-                                  <div>
-                                  <span className="font-bold">Belonging to Whom </span>:
-                                    {property.property_details.belongingToWhom}
-                                  </div>
+                                    <div>
+                                      <span className="font-bold">
+                                        Category of Property{" "}
+                                      </span>{" "}
+                                      :
+                                      {
+                                        property.property_details
+                                          .categoryOfProperty
+                                      }
+                                    </div>
+                                    <div>
+                                      <span className="font-bold">
+                                        Belonging to Whom{" "}
+                                      </span>
+                                      :
+                                      {
+                                        property.property_details
+                                          .belongingToWhom
+                                      }
+                                    </div>
                                   </div>
                                   <div className="flex justify-around mt-2">
-                                  <div>
-                                  <span className="font-bold">Nature of Property</span>:
-                                    {property.property_details.natureOfProperty}
-                                  </div>
-                                  <div>
-                                  <span className="font-bold">Location of Property </span>:{" "}
-                                    {
-                                      property.property_details
-                                        .locationOfProperty
-                                    }
-                                  </div>
+                                    <div>
+                                      <span className="font-bold">
+                                        Nature of Property
+                                      </span>
+                                      :
+                                      {
+                                        property.property_details
+                                          .natureOfProperty
+                                      }
+                                    </div>
+                                    <div>
+                                      <span className="font-bold">
+                                        Location of Property{" "}
+                                      </span>
+                                      :{" "}
+                                      {
+                                        property.property_details
+                                          .locationOfProperty
+                                      }
+                                    </div>
                                   </div>
                                   <div className="text-lg text-center font-bold">
                                     Chain of Custody
@@ -449,12 +479,32 @@ const ManageEntDetailsData = () => {
                                     (coc, index) => (
                                       <div className="mt-2" key={index}>
                                         <div className="flex justify-around">
-                                        <div><span className="font-bold">Chain of Custody </span>: {index + 1}</div>
-                                        <div><span className="font-bold">Date </span>: {coc.date}</div>
+                                          <div>
+                                            <span className="font-bold">
+                                              Chain of Custody{" "}
+                                            </span>
+                                            : {index + 1}
+                                          </div>
+                                          <div>
+                                            <span className="font-bold">
+                                              Date{" "}
+                                            </span>
+                                            : {coc.date}
+                                          </div>
                                         </div>
                                         <div className="flex justify-around mt-1">
-                                        <div><span className="font-bold">Time </span>: {coc.time}</div>
-                                        <div><span className="font-bold">Purpose </span>: {coc.purpose}</div>
+                                          <div>
+                                            <span className="font-bold">
+                                              Time{" "}
+                                            </span>
+                                            : {coc.time}
+                                          </div>
+                                          <div>
+                                            <span className="font-bold">
+                                              Purpose{" "}
+                                            </span>
+                                            : {coc.purpose}
+                                          </div>
                                         </div>
                                       </div>
                                     )
@@ -703,7 +753,6 @@ const ManageEntDetailsData = () => {
                                     </Box>
                                   </Modal>
                                 </div>
-
                               ))}
                             </Box>
                           </Modal>
