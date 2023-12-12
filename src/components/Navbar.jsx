@@ -33,6 +33,9 @@ export default function Navbar() {
         <div className="text-white mx-20 hover:text-yellow-300">
           <Link href="/manageEnteries">Manage Entries</Link>
         </div>
+        <div className="text-white mx-20 hover:text-yellow-300">
+          <Link href="/profile">Profile</Link>
+        </div>
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import { signOut } from "next-auth/react";
 export default function Homepage() {
   return (
     <div>
-      <div onClick={signOut} className="hover:cursor-pointer">SignOut</div>
+      <div onClick={signOut} className="hover:cursor-pointer bg-red-600 w-28 ">SignOut</div>
       <div className=" mt-16 flex justify-center">
         <div className="w-64 h-36 bg-blue-600 mx-10 text-white flex-col text-2xl text-center p-10">
           <div className="mb-2">Total Case</div>

@@ -8,9 +8,22 @@ const UserSchema = new Schema(
       required: [true, "User ID required"],
       unique: true,
     },
+    name:{
+      type: String,
+      required: [true, "Name required"],
+    },
+    email: {
+      type: String,
+      required: [true, "Email required"],
+      unique: true,
+    },
     password: {
       type: String,
       required: [true, "Password required"],
+    },
+    psName:{
+      type: String,
+      required: [true, "Police Station Name required"],
     },
     role: {
       type: String,
