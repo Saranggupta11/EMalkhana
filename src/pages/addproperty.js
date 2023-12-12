@@ -8,6 +8,9 @@ import TabPanel from "@mui/lab/TabPanel";
 import PropertyDetails from "../components/PropertyDetails";
 import ChainofCustody from "../components/ChainofCustody";
 import DisposalofProperty from "../components/DisposalofProperty";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+
 
 export default function Addproperty() {
   const [value, setValue] = React.useState("1");
@@ -15,7 +18,14 @@ export default function Addproperty() {
     setValue(newValue);
   };
 
-
+  const { data: session, status } = useSession()
+  const router = useRouter();
+  if (status === "loading") {
+    return <p>Loading...</p>;
+  }
+  if (!session || session === null || session === undefined) {
+    router.push("/login");
+  }
   return (
     <div>
       <div className="ml-5">

@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import Box from '@mui/material/Box';
 // import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -19,9 +19,25 @@ const style = {
   };
 
 const PropertyDetails = () => {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const [mrNo, setMrNo] = useState("");
+    const [firNo, setFirNo] = useState("");
+    const [dateOfFir, setDateOfFir] = useState("");
+    const [dateOfSeizure, setDateOfSeizure] = useState("");
+    const [psName, setPsName] = useState("");
+    const [date, setDate] = useState("");
+    const [state, setState] = useState("");
+    const [district, setDistrict] = useState("");
+    const [seizedByOfficer, setSeizedByOfficer] = useState("");
+    const [seizedLocation, setSeizedLocation] = useState("");
+    const [psReceiptDateTime, setPsReceiptDateTime] = useState("");
+    const [ownerName, setOwnerName] = useState("");
+    const [addressOfOwner, setAddressOfOwner] = useState("");
+
+    
 
   return (
     <div>
