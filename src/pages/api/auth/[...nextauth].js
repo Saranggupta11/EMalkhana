@@ -3,6 +3,7 @@ import NextAuth from "next-auth/next";
 import dbConnect from "@/db/utils/dbConnect";
 import User from "@/db/model/User";
 import bcrypt from "bcrypt";
+import loggingMiddleware from "../logMiddleware";
 
 export const authOptions = {
   providers: [
@@ -10,6 +11,7 @@ export const authOptions = {
       name: "Credentials",
       credentials: {},
       async authorize(credentials, req) {
+        console.log("req.user in authorize:", req.user);
         const { userId, password } = credentials;
         try {
           await dbConnect();
@@ -24,8 +26,8 @@ export const authOptions = {
           if (!isValid) {
             return null;
           }
-
-          return user;
+          console.log(user);
+          return Promise.resolve(user);
         } catch (e) {
           console.log(e);
         }
@@ -33,11 +35,18 @@ export const authOptions = {
     }),
   ],
   session: {
-    stratergy: "jwt",
+    jwt: true,
+    serialize: (user, callback) => {
+      callback(null, user);
+    },
+    // Deserialize user from the session
+    deserialize: (user, callback) => {
+      callback(null, user);
+    },
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
 
 const authHandler = NextAuth(authOptions);
 
-export default authHandler;
+export default loggingMiddleware(authHandler);

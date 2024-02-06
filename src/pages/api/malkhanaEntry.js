@@ -1,8 +1,10 @@
 import dbConnect from "@/db/utils/dbConnect";
 import MalkhanaEntry from "@/db/model/MalkhanaEntry";
 import Property from "@/db/model/Property";
+import loggingMiddleware from "./logMiddleware";
 
-export default async function malkahanaEntryHandler(req, res) {
+
+const malkahanaEntryHandler = async (req, res) => {
   try {
     await dbConnect();
 
@@ -90,4 +92,6 @@ export default async function malkahanaEntryHandler(req, res) {
       message: `failed. ${error.message}`,
     });
   }
-}
+};
+
+export default loggingMiddleware(malkahanaEntryHandler);

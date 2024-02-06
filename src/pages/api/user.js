@@ -1,7 +1,8 @@
 import dbConnect from "@/db/utils/dbConnect";
 import User from "@/db/model/User";
+import loggingMiddleware from "./logMiddleware";
 
-export default async function userHandler(req, res) {
+const userHandler = async (req, res) => {
   try {
     await dbConnect();
 
@@ -79,4 +80,6 @@ export default async function userHandler(req, res) {
       message: `${err}`,
     });
   }
-}
+};
+
+export default loggingMiddleware(userHandler);

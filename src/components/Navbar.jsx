@@ -8,17 +8,21 @@ export default function Navbar() {
       <div className="flex justify-center mt-10">
         <Image
              src="/images/logo.png"
-             width={150}
-             height={150}
+             width={100}
+             height={100}
+             className="rounded-full mr-auto ml-auto"
              alt='Logo'
             />
+        <div className="flex items-center">
         <div className="text-5xl font-black text-cente text-blue-600">
           Jharkhand Police E-Malkhana
         </div>
+        </div>
         <Image
              src="/images/logo.png"
-             width={150}
-             height={150}
+             width={100}
+             height={100}
+             className="rounded-full mr-auto ml-auto"
              alt='Logo'
             />
       </div>
