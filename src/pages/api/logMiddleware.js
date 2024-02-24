@@ -7,7 +7,7 @@ fs.writeFileSync('logs.log', '');
 const logger = winston.createLogger({
     transports: [
         new winston.transports.Console(),
-        new winston.transports.File({ filename: 'logs.log',  options: { flags: 'a' }})
+        new winston.transports.File({ filename: 'logs.log' })
     ],
     format: winston.format.combine(
         winston.format.timestamp(),
@@ -17,6 +17,7 @@ const logger = winston.createLogger({
 });
 
 const loggingMiddleware = (handler) => async (req, res) => {
+    // console.log(req)
     console.log("req.user in loggingMiddleware:", req.user);
     try {
         logger.info({
@@ -27,12 +28,6 @@ const loggingMiddleware = (handler) => async (req, res) => {
             user: req.user,  // If you have user authentication
             data: req.body,
         });
-        // if (req.body) {
-        //     logInfo.data = req.body;
-        // }
-
-        // logger.info(logInfo);
-        console.log(req.user);
         return await handler(req, res);
     } catch (error) {
         logger.error({

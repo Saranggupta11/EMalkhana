@@ -36,17 +36,23 @@ export const authOptions = {
   ],
   session: {
     jwt: true,
-    serialize: (user, callback) => {
-      callback(null, user);
-    },
-    // Deserialize user from the session
-    deserialize: (user, callback) => {
-      callback(null, user);
-    },
+  },
+  callbacks: {
+    async signIn(user, account, profile) {
+      console.log("user in signIn:", user);
+      // Call the loggingMiddleware here passing the request and response
+      const handler = loggingMiddleware(async (req, res) => {
+        // Your sign-in logic here
+        return true; // Return whatever signIn needs to return
+      });
+
+      // Call the handler with request and response
+      return await handler(user); // Pass empty objects as request and response
+    }
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
 
 const authHandler = NextAuth(authOptions);
 
-export default loggingMiddleware(authHandler);
+export default authHandler;

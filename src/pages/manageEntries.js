@@ -4,7 +4,7 @@ import ManageEntDetailsData from '../components/ManageEntDetailsData'
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
-const ManageEnteries = () => {
+const ManageEntries = () => {
   const { data: session, status } = useSession()
   const router = useRouter();
   if (status === "loading") {
@@ -15,10 +15,10 @@ const ManageEnteries = () => {
   }
   return (
     <div>
-        <ManageEntDetails/>
+        {/* <ManageEntDetails/> */}
         <ManageEntDetailsData/>
     </div>
   )
 }
 
-export default ManageEnteries
+export default ManageEntries
