@@ -5,13 +5,17 @@ import { useRouter } from "next/router";
 
 const Profile = () => {
   const { data: session, status } = useSession();
+  // const x=useSession();
+
   const router = useRouter();
   if (status === "loading") {
+  
     return <p>Loading...</p>;
   }
   if (!session || session === null || session === undefined) {
     router.push("/login");
   }
+  console.log(session.user.email);
 
   const handleSignOut = async (e) => {
     e.preventDefault();

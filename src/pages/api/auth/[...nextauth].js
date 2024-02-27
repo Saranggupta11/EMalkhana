@@ -11,7 +11,6 @@ export const authOptions = {
       name: "Credentials",
       credentials: {},
       async authorize(credentials, req) {
-        console.log("req.user in authorize:", req.user);
         const { userId, password } = credentials;
         try {
           await dbConnect();
@@ -26,30 +25,21 @@ export const authOptions = {
           if (!isValid) {
             return null;
           }
-          console.log(user);
-          return Promise.resolve(user);
+
+          // Include the entire user object in the session
+          console.log("user in authorize:", user);
+          return { ...user, id: user._id.toString() }; // returning session object with user details
         } catch (e) {
           console.log(e);
+          return null;
         }
       },
     }),
   ],
   session: {
-    jwt: true,
+    jwt: true, // use JWT for session
   },
-  callbacks: {
-    async signIn(user, account, profile) {
-      console.log("user in signIn:", user);
-      // Call the loggingMiddleware here passing the request and response
-      const handler = loggingMiddleware(async (req, res) => {
-        // Your sign-in logic here
-        return true; // Return whatever signIn needs to return
-      });
 
-      // Call the handler with request and response
-      return await handler(user); // Pass empty objects as request and response
-    }
-  },
   secret: process.env.NEXTAUTH_SECRET,
 };
 

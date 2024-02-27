@@ -2,9 +2,18 @@ import dbConnect from "@/db/utils/dbConnect";
 import MalkhanaEntry from "@/db/model/MalkhanaEntry";
 import Property from "@/db/model/Property";
 import loggingMiddleware from "./logMiddleware";
-
+import { getServerSession } from "next-auth";
+import { authOptions } from "./auth/[...nextauth]";
 
 const malkahanaEntryHandler = async (req, res) => {
+  const session = await getServerSession(req, res, authOptions);
+  if (!session) {
+    res.status(401).json({
+      ok: false,
+      message: "Unauthorized",
+    });
+    return;
+  }
   try {
     await dbConnect();
 
@@ -20,6 +29,7 @@ const malkahanaEntryHandler = async (req, res) => {
           ok: true,
           message: `MalkhanaEntry ${method}`,
           case: newCase,
+          user: session.user,
         });
         break;
 
@@ -30,10 +40,11 @@ const malkahanaEntryHandler = async (req, res) => {
             ok: true,
             message: `MalkhanaEntry ${method}`,
             _cases,
+            user: session.user,
           });
         }
         const _case = await MalkhanaEntry.findOne({ mrNo })
-          .populate({ path: "properties" , model: Property})
+          .populate({ path: "properties", model: Property })
           .exec();
         res.status(200).json({
           ok: true,
@@ -53,6 +64,7 @@ const malkahanaEntryHandler = async (req, res) => {
             ok: true,
             message: `MalkhanaEntry ${method}`,
             case: updateCase,
+            user: session.user,
           });
         } else {
           res.status(404).json({
@@ -70,11 +82,13 @@ const malkahanaEntryHandler = async (req, res) => {
             ok: true,
             message: `MalkhanaEntry ${method}`,
             case: deletedCase,
+            user: session.user,
           });
         } else {
           res.status(404).json({
             ok: false,
             message: `MalkhanaEntry ${method} failed. MalkhanaEntry not found`,
+            user: session.user,
           });
         }
         break;
@@ -82,6 +96,7 @@ const malkahanaEntryHandler = async (req, res) => {
         res.status(400).json({
           ok: false,
           message: `MalkhanaEntry ${method} failed. Invalid method`,
+          user: session.user,
         });
         break;
     }
@@ -90,6 +105,7 @@ const malkahanaEntryHandler = async (req, res) => {
     res.status(500).json({
       ok: false,
       message: `failed. ${error.message}`,
+      user: session.user,
     });
   }
 };

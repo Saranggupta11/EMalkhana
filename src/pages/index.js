@@ -6,7 +6,7 @@ import Dashboard from "@/pages/homedashboard";
 import { useSession, getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 const inter = Inter({ subsets: ["latin"] });
-
+import ManageEntDetailsData from "./manageEntries";
 export default function Home() {
   const { data: session, status } = useSession()
   const router = useRouter();
@@ -19,7 +19,7 @@ export default function Home() {
 
   return (
     <>
-      <Dashboard />
+    <ManageEntDetailsData/>
     </>
   );
 }

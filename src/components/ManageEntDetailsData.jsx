@@ -198,7 +198,7 @@ const ManageEntDetailsData = () => {
     handleOpen,
   };
   return (
-    <>
+    <div className="mt-5">
      
 
       <div className="text-xl ml-5 text-black">
@@ -303,7 +303,7 @@ const ManageEntDetailsData = () => {
           </table>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

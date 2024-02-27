@@ -123,15 +123,20 @@ export default function Navbar() {
     <nav className="flex flex-wrap items-center justify-between bg-white py-4 lg:px-12 shadow border-solid border-t-2 border-blue-700">
       {/* Logo */}
       <div className="flex items-center mr-6">
-        <Image
-          src="/images/logo.png"
-          width={50}
-          height={50}
-          className="rounded-full mr-auto ml-auto"
-          alt="Logo"
-        />{" "}
-        <span className="font-semibold text-xl tracking-tight text-blue-700">
-           E-Malkhana
+        <Link href="/">
+          <Image
+            src="/images/logo.png"
+            width={50}
+            height={50}
+            className="rounded-full mr-auto ml-auto"
+            alt="Logo"
+          />{" "}
+          <span className="font-semibold text-xl tracking-tight text-blue-700">
+            E-Malkhana
+          </span>
+        </Link>
+        <span className="ml-2 font-semibold text-xl pl-10 text-black">
+          Cases: 12
         </span>
       </div>
 
@@ -191,32 +196,32 @@ export default function Navbar() {
         <div className="flex justify-end items-center">
           {/* Add Entry Button */}
           <button
-            className="block mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2 font-bold text-blue-700"
+            className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-base px-5 py-2.5 me-2 mb-2 transform transition-transform duration-300 hover:scale-105"
             onClick={() => setOpenEntryModal(true)}
           >
             Add Entry
           </button>
 
           {/* Export Button */}
-          <div className="focus:outline-none text-black bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-base px-5 py-2.5 me-2 mb-2 ">
+          <div className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-base px-5 py-2.5 me-2 mb-2 transform transition-transform duration-300 hover:scale-105">
             Export
           </div>
 
           {/* Print Button */}
           <button
             type="button"
-            className="focus:outline-none text-black bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-base px-5 py-2.5 me-2 mb-2 "
+            className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-base px-5 py-2.5 me-2 mb-2 transform transition-transform duration-300 hover:scale-105"
           >
             Print
           </button>
 
           {/* Profile Link */}
-          <div className="ml-2 mt-4 lg:mt-0">
+          <div className="ml-2 px-5 py-2.5 me-2 mb-2">
             <Link
               href="/profile"
-              className="block text-md px-4 py-2 rounded text-blue-700 font-bold hover:text-white hover:bg-blue-700"
+              className="block text-md  rounded text-blue-700 font-bold   transform transition-transform duration-300 hover:scale-105"
             >
-              <AiOutlineUser size={20} />
+              <AiOutlineUser size={30} />
             </Link>
           </div>
         </div>

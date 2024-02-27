@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import Modal from "@mui/material/Modal";
 import { Button } from "@mui/material";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
 
 const AddEntryModal = ({ openEntryModal, setOpenEntryModal }) => {
   const [mrNo, setMrNo] = useState("");
@@ -73,12 +73,19 @@ const AddEntryModal = ({ openEntryModal, setOpenEntryModal }) => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <div className="flex justify-center items-center h-full">
+      <div className="flex justify-center items-center h-full align-center">
         <div className="bg-white rounded-lg p-8 w-4/5 h-4/5 relative">
-          <Button onClick={handleCloseModal} className="absolute top-0 right-0 mt-2 mr-2"><CloseIcon /></Button>
-          <div className="flex flex-wrap -mx-2">
+          <div
+            onClick={handleCloseModal}
+            className="absolute top-0 right-0 mt-4 mr-4 hover:cursor-pointer"
+          >
+            <CloseIcon />
+          </div>
+          <div className="flex flex-wrap mx-2 justify-center">
             <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
-              <label htmlFor="mr_no" className="block text-sm text-gray-600">MR No</label>
+              <label htmlFor="mr_no" className="block text-sm text-gray-600">
+                MR No
+              </label>
               <input
                 type="text"
                 id="mr_no"
@@ -88,7 +95,9 @@ const AddEntryModal = ({ openEntryModal, setOpenEntryModal }) => {
               />
             </div>
             <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
-              <label htmlFor="fir_no" className="block text-sm text-gray-600">FIR No</label>
+              <label htmlFor="fir_no" className="block text-sm text-gray-600">
+                FIR No
+              </label>
               <input
                 type="text"
                 id="fir_no"
@@ -98,7 +107,12 @@ const AddEntryModal = ({ openEntryModal, setOpenEntryModal }) => {
               />
             </div>
             <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
-              <label htmlFor="date_of_fir" className="block text-sm text-gray-600">Date of FIR</label>
+              <label
+                htmlFor="date_of_fir"
+                className="block text-sm text-gray-600"
+              >
+                Date of FIR
+              </label>
               <input
                 type="date"
                 id="date_of_fir"
@@ -108,7 +122,12 @@ const AddEntryModal = ({ openEntryModal, setOpenEntryModal }) => {
               />
             </div>
             <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
-              <label htmlFor="date_of_seizure" className="block text-sm text-gray-600">Date of Seizure</label>
+              <label
+                htmlFor="date_of_seizure"
+                className="block text-sm text-gray-600"
+              >
+                Date of Seizure
+              </label>
               <input
                 type="date"
                 id="date_of_seizure"
@@ -118,7 +137,9 @@ const AddEntryModal = ({ openEntryModal, setOpenEntryModal }) => {
               />
             </div>
             <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
-              <label htmlFor="ps_name" className="block text-sm text-gray-600">PS Name</label>
+              <label htmlFor="ps_name" className="block text-sm text-gray-600">
+                PS Name
+              </label>
               <input
                 type="text"
                 id="ps_name"
@@ -128,7 +149,9 @@ const AddEntryModal = ({ openEntryModal, setOpenEntryModal }) => {
               />
             </div>
             <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
-              <label htmlFor="date" className="block text-sm text-gray-600">Date</label>
+              <label htmlFor="date" className="block text-sm text-gray-600">
+                Date
+              </label>
               <input
                 type="date"
                 id="date"
@@ -138,7 +161,9 @@ const AddEntryModal = ({ openEntryModal, setOpenEntryModal }) => {
               />
             </div>
             <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
-              <label htmlFor="state" className="block text-sm text-gray-600">State</label>
+              <label htmlFor="state" className="block text-sm text-gray-600">
+                State
+              </label>
               <input
                 type="text"
                 id="state"
@@ -148,7 +173,9 @@ const AddEntryModal = ({ openEntryModal, setOpenEntryModal }) => {
               />
             </div>
             <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
-              <label htmlFor="district" className="block text-sm text-gray-600">District</label>
+              <label htmlFor="district" className="block text-sm text-gray-600">
+                District
+              </label>
               <input
                 type="text"
                 id="district"
@@ -158,7 +185,12 @@ const AddEntryModal = ({ openEntryModal, setOpenEntryModal }) => {
               />
             </div>
             <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
-              <label htmlFor="seized_by_officer" className="block text-sm text-gray-600">Seized By Officer</label>
+              <label
+                htmlFor="seized_by_officer"
+                className="block text-sm text-gray-600"
+              >
+                Seized By Officer
+              </label>
               <input
                 type="text"
                 id="seized_by_officer"
@@ -168,7 +200,12 @@ const AddEntryModal = ({ openEntryModal, setOpenEntryModal }) => {
               />
             </div>
             <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
-              <label htmlFor="seized_location" className="block text-sm text-gray-600">Seized Location</label>
+              <label
+                htmlFor="seized_location"
+                className="block text-sm text-gray-600"
+              >
+                Seized Location
+              </label>
               <input
                 type="text"
                 id="seized_location"
@@ -178,7 +215,12 @@ const AddEntryModal = ({ openEntryModal, setOpenEntryModal }) => {
               />
             </div>
             <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
-              <label htmlFor="ps_receipt_date_time" className="block text-sm text-gray-600">PS Receipt - Date & Time</label>
+              <label
+                htmlFor="ps_receipt_date_time"
+                className="block text-sm text-gray-600"
+              >
+                PS Receipt - Date & Time
+              </label>
               <input
                 type="date"
                 id="ps_receipt_date_time"
@@ -188,7 +230,12 @@ const AddEntryModal = ({ openEntryModal, setOpenEntryModal }) => {
               />
             </div>
             <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
-              <label htmlFor="owner_name" className="block text-sm text-gray-600">Owner Name</label>
+              <label
+                htmlFor="owner_name"
+                className="block text-sm text-gray-600"
+              >
+                Owner Name
+              </label>
               <input
                 type="text"
                 id="owner_name"
@@ -197,8 +244,13 @@ const AddEntryModal = ({ openEntryModal, setOpenEntryModal }) => {
                 className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-transparent focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
             </div>
-            <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
-              <label htmlFor="address_of_owner" className="block text-sm text-gray-600">Address of Owner</label>
+            <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4 justify-center">
+              <label
+                htmlFor="address_of_owner"
+                className="block text-sm text-gray-600"
+              >
+                Address of Owner
+              </label>
               <input
                 type="text"
                 id="address_of_owner"
