@@ -11,68 +11,79 @@ const userHandler = async (req, res) => {
 
     console.log(userId)
 
+    const token = req.cookies.token;
+    if (!token) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+
     // if (!method) method = "GET";
+    try {
 
-    switch (method) {
-      case "POST":
-        const newUser = await User.create(req.body);
-        res.status(201).json({
-          ok: true,
-          message: `User ${method}`,
-          user: newUser,
-        });
-        break;
+      switch (method) {
 
-      case "GET":
-        const user = await User.findOne({ userId }).clone();
-        res.status(200).json({
-          ok: true,
-          message: `User ${method}`,
-          user,
-        });
-        break;
 
-      case "PUT":
-        const updateUser = await User.findOne({ userId}).clone();
-        if (updateUser) {
-            Object.keys(req.body).forEach((key) => {
-                updateUser[key] = req.body[key];
-              });
-              await updateUser.save();
+        case "POST":
+          const newUser = await User.create(req.body);
+          res.status(201).json({
+            ok: true,
+            message: `User ${method}`,
+            user: newUser,
+          });
+          break;
+
+        case "GET":
+          const user = await User.findOne({ userId }).clone();
           res.status(200).json({
             ok: true,
             message: `User ${method}`,
-            user: updateUser,
+            user,
           });
-        } else {
-          res.status(404).json({
-            ok: false,
-            message: `User ${method} failed. User not found`,
-          });
-        }
-        break;
-        case "DELETE":
-            const deletedUser = await User.findOneAndDelete({ userId }).clone();
-            if (deletedUser) {
-              res.status(200).json({
-                ok: true,
-                message: `User ${method}`,
-                user: deletedUser,
-              });
-            } else {
-              res.status(404).json({
-                ok: false,
-                message: `User ${method} failed. User not found`,
-              });
-            }
-            break;
-    
-          default:
-            res.status(400).json({
-              ok: false,
-              message: `Invalid method ${method}`,
+          break;
+
+        case "PUT":
+          const updateUser = await User.findOne({ userId }).clone();
+          if (updateUser) {
+            Object.keys(req.body).forEach((key) => {
+              updateUser[key] = req.body[key];
             });
-            break;
+            await updateUser.save();
+            res.status(200).json({
+              ok: true,
+              message: `User ${method}`,
+              user: updateUser,
+            });
+          } else {
+            res.status(404).json({
+              ok: false,
+              message: `User ${method} failed. User not found`,
+            });
+          }
+          break;
+        case "DELETE":
+          const deletedUser = await User.findOneAndDelete({ userId }).clone();
+          if (deletedUser) {
+            res.status(200).json({
+              ok: true,
+              message: `User ${method}`,
+              user: deletedUser,
+            });
+          } else {
+            res.status(404).json({
+              ok: false,
+              message: `User ${method} failed. User not found`,
+            });
+          }
+          break;
+
+        default:
+          res.status(400).json({
+            ok: false,
+            message: `Invalid method ${method}`,
+          });
+          break;
+      }
+    } catch (error) {
+      res.status(401).json({ message: 'Unauthorized' });
     }
   } catch (err) {
     res.status(500).json({
@@ -82,4 +93,4 @@ const userHandler = async (req, res) => {
   }
 };
 
-export default loggingMiddleware(userHandler);
+export default userHandler;
