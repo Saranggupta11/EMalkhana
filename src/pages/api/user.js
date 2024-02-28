@@ -18,7 +18,8 @@ const userHandler = async (req, res) => {
 
     // if (!method) method = "GET";
     try {
-
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const { userId } = decoded;
       switch (method) {
 
 

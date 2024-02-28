@@ -29,7 +29,7 @@ const malkahanaEntryHandler = async (req, res) => {
             ok: true,
             message: `MalkhanaEntry ${method}`,
             case: newCase,
-            user: session.user,
+            user: decoded,
           });
           break;
 
@@ -42,7 +42,7 @@ const malkahanaEntryHandler = async (req, res) => {
               ok: true,
               message: `MalkhanaEntry ${method}`,
               _cases,
-              user: session.user,
+              user: decoded,
             });
           }
           const _case = await MalkhanaEntry.findOne({ mrNo })
@@ -67,7 +67,7 @@ const malkahanaEntryHandler = async (req, res) => {
               ok: true,
               message: `MalkhanaEntry ${method}`,
               case: updateCase,
-              user: session.user,
+              user: decoded,
             });
           } else {
             res.status(404).json({
@@ -87,13 +87,13 @@ const malkahanaEntryHandler = async (req, res) => {
               ok: true,
               message: `MalkhanaEntry ${method}`,
               case: deletedCase,
-              user: session.user,
+              user: decoded,
             });
           } else {
             res.status(404).json({
               ok: false,
               message: `MalkhanaEntry ${method} failed. MalkhanaEntry not found`,
-              user: session.user,
+              user: decoded,
             });
           }
           break;
