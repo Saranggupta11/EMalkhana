@@ -37,8 +37,8 @@ const Profile = () => {
       </div>
       {session && (
         <div className="flex gap-6 justify-center">
-          <p>Name: {session.user.name}</p>
-          <p>Email: {session.user.email}</p>
+          {/* <p>Name: {session.user.name}</p>
+          <p>Email: {session.user.email}</p> */}
         </div>
       )}
     </div>

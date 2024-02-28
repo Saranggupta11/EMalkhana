@@ -9,9 +9,13 @@ import { set } from "mongoose";
 import ViewModal from "./ViewModal";
 import AddPropertyModal from "./AddPropertyModal";
 import AddEntryModal from "./AddEntryModal";
+import { useRouter } from "next/router";
 const ManageEntDetailsData = () => {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    router.push("/add-property");
+  };
   const handleClose = () => setOpen(false);
 
   const [openDetails, setOpenDetails] = useState(false);
@@ -77,9 +81,10 @@ const ManageEntDetailsData = () => {
     const mrNo = entDetails[index].mrNo;
     const res = await axios.get(`/api/malkhanaEntry/?mrNo=${mrNo}`);
     const data = await res.data._case;
-    setMrEntry(data);
-    console.log(mrEntry);
-    handleOpenDetails();
+    router.push({
+      pathname: "/view",
+      query: { mrEntry: JSON.stringify(data) },
+    });
   };
 
   const handleDispose = async (index) => {
@@ -199,8 +204,6 @@ const ManageEntDetailsData = () => {
   };
   return (
     <div className="mt-5">
-     
-
       <div className="text-xl ml-5 text-black">
         Showing 1-{entDetails.length} (out of {entDetails.length})
       </div>
@@ -283,18 +286,17 @@ const ManageEntDetailsData = () => {
                       >
                         View
                       </div>
-                      {mrEntry && mrEntry.basic_details && (
-                        <ViewModal {...stateProps} />
-                      )}
+
                       <div
                         onClick={handleOpen}
                         className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-lg rounded-lg text-base px-4 py-2 me-2 hover:cursor-pointer"
                       >
                         Add Property
                       </div>
-                      {mrEntry && mrEntry.basic_details && (
+                      {/* {detail.mrNo && detail.basic_details && (
+                        
                         <AddPropertyModal {...stateProps} />
-                      )}
+                      )} */}
                     </div>
                   </td>
                 </tr>

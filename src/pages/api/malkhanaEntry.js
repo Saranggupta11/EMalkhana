@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 import dbConnect from "@/db/utils/dbConnect";
 import MalkhanaEntry from "@/db/model/MalkhanaEntry";
 import Property from "@/db/model/Property";
@@ -7,20 +7,17 @@ import loggingMiddleware from "./logMiddleware";
 const malkahanaEntryHandler = async (req, res) => {
   try {
     await dbConnect();
-
     const { method } = req || "GET";
     const { mrNo } = req.query;
-
     // Authenticate the request
     const token = req.cookies.token;
     if (!token) {
-      return res.status(401).json({ message: 'Unauthorized' });
+      return res.status(401).json({ message: "Unauthorized" });
     }
 
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       const { userId } = decoded;
-
       switch (method) {
         case "POST":
           // Your POST logic for MalkhanaEntry
@@ -29,12 +26,11 @@ const malkahanaEntryHandler = async (req, res) => {
             ok: true,
             message: `MalkhanaEntry ${method}`,
             case: newCase,
-            user: session.user,
+            user: decoded,
           });
           break;
 
         case "GET":
-          console.log(decoded)
           // Your GET logic for MalkhanaEntry
           if (!mrNo) {
             const _cases = await MalkhanaEntry.find();
@@ -42,8 +38,9 @@ const malkahanaEntryHandler = async (req, res) => {
               ok: true,
               message: `MalkhanaEntry ${method}`,
               _cases,
-              user: session.user,
+              user: decoded,
             });
+            break;
           }
           const _case = await MalkhanaEntry.findOne({ mrNo })
             .populate({ path: "properties", model: Property })
@@ -67,7 +64,7 @@ const malkahanaEntryHandler = async (req, res) => {
               ok: true,
               message: `MalkhanaEntry ${method}`,
               case: updateCase,
-              user: session.user,
+              user: decoded,
             });
           } else {
             res.status(404).json({
@@ -87,13 +84,13 @@ const malkahanaEntryHandler = async (req, res) => {
               ok: true,
               message: `MalkhanaEntry ${method}`,
               case: deletedCase,
-              user: session.user,
+              user: decoded,
             });
           } else {
             res.status(404).json({
               ok: false,
               message: `MalkhanaEntry ${method} failed. MalkhanaEntry not found`,
-              user: session.user,
+              user: decoded,
             });
           }
           break;
@@ -106,7 +103,8 @@ const malkahanaEntryHandler = async (req, res) => {
           break;
       }
     } catch (error) {
-      res.status(401).json({ message: 'Unauthorized' });
+      console.log("Error", error);
+      res.status(401).json({ message: "Unauthorized" });
     }
   } catch (error) {
     res.status(500).json({ message: `Failed. ${error.message}` });
