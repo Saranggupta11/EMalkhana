@@ -11,10 +11,10 @@ const userHandler = async (req, res) => {
 
     console.log(userId)
 
-    const token = req.cookies.token;
-    if (!token) {
-      return res.status(401).json({ message: 'Unauthorized' });
-    }
+    // const token = req.cookies.token;
+    // if (!token) {
+    //   return res.status(401).json({ message: 'Unauthorized' });
+    // }
 
     // if (!method) method = "GET";
     try {

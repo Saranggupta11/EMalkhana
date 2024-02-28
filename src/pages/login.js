@@ -1,7 +1,7 @@
 // pages/login.js
 import React, { useState } from "react";
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
+import axios from "axios";
 
 const LoginPage = () => {
   const [userId, setuserId] = useState("");
@@ -13,12 +13,12 @@ const LoginPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await signIn("credentials", {
+      const res = await axios.post("/api/login", {
         userId,
         password,
-        redirect: false,
       });
-      if (res.error) {
+      console.log(res);
+      if (res.status !== 201 && res.status !== 200) {
         setError("Invalid Credentials");
         alert(error);
         return;
