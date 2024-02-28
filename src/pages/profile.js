@@ -1,25 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
+import axios from "axios";
 
 const Profile = () => {
-  const { data: session, status } = useSession();
   // const x=useSession();
-
+  const [userData, setUserData] = useState(null);
   const router = useRouter();
-  if (status === "loading") {
-  
-    return <p>Loading...</p>;
-  }
-  if (!session || session === null || session === undefined) {
-    router.push("/login");
-  }
-  console.log(session.user.email);
+  useEffect(() => {
+    async function fetchData() {
+      try{
+        const res = await axios.get("/api/user");
+        console.log("res", res.data.user);
+        setUserData(res.data.user);
+      }
+      catch(err){
+        console.log("Error", err);
+        if(err.response.status === 409){
+          router.push("/login")
+        }
+      }
+      
+    }
+    fetchData();
+  }, [router]);
 
   const handleSignOut = async (e) => {
     e.preventDefault();
-    await signOut();
+    const res = await axios.delete("/api/login");
+    console.log("res", res);
     router.replace("/");
   };
 
@@ -35,12 +44,31 @@ const Profile = () => {
           SignOut
         </button>
       </div>
-      {session && (
-        <div className="flex gap-6 justify-center">
-          {/* <p>Name: {session.user.name}</p>
-          <p>Email: {session.user.email}</p> */}
+      <div>
+        <h2 className="text-lg font-semibold">User Information</h2>
+        <div>
+          <p>
+            <span className="font-semibold">User Id:</span> {userData?.userId}
+          </p>
+          <p>
+            <span className="font-semibold">Name:</span> {userData?.name}
+          </p>
+          <p>
+            <span className="font-semibold">Email:</span> {userData?.email}
+          </p>
+          <p>
+            <span className="font-semibold">Role:</span> {userData?.role}
+          </p>
+          <p>
+            <span className="font-semibold">PS Name:</span> {userData?.psName}
+          </p>
+          <p>
+            <span className="font-semibold">Last Updated Date</span>{" "}
+            {new Date(userData?.updatedAt).toLocaleDateString()}{" "}
+            {new Date(userData?.updatedAt).toLocaleTimeString()}
+          </p>
         </div>
-      )}
+      </div>
     </div>
   );
 };

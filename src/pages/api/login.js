@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
 import dbConnect from "@/db/utils/dbConnect";
 import User from "@/db/model/User";
-import loggingMiddleware from "./logMiddleware";
 import bcrypt from "bcrypt";
 
 const loginHandler = async (req, res) => {

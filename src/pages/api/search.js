@@ -1,6 +1,5 @@
 import dbConnect from "@/db/utils/dbConnect";
 import MalkhanaEntry from "@/db/model/MalkhanaEntry";
-import loggingMiddleware from "./logMiddleware";
 import jwt from 'jsonwebtoken';
 
 const malkahanaEntrySearchHandler = async (req, res) => {

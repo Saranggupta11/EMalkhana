@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import dbConnect from "@/db/utils/dbConnect";
 import MalkhanaEntry from "@/db/model/MalkhanaEntry";
 import Property from "@/db/model/Property";
-import loggingMiddleware from "./logMiddleware";
+
 
 const malkahanaEntryHandler = async (req, res) => {
   try {

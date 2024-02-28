@@ -1,27 +1,21 @@
 import dbConnect from "@/db/utils/dbConnect";
 import User from "@/db/model/User";
-import loggingMiddleware from "./logMiddleware";
+import jwt from "jsonwebtoken";
+
 
 const userHandler = async (req, res) => {
   try {
     await dbConnect();
-
+    const token = req.cookies.token;
+    if (!token) {
+      return res.status(409).json({ message: "Unauthorized" });
+    }
     const { method } = req || "GET";
-    const { userId } = req.query;
-
-    console.log(userId)
-
-    // const token = req.cookies.token;
-    // if (!token) {
-    //   return res.status(401).json({ message: 'Unauthorized' });
-    // }
-
-    // if (!method) method = "GET";
     try {
-
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const { username } = decoded;
+      console.log("method", method);
       switch (method) {
-
-
         case "POST":
           const newUser = await User.create(req.body);
           res.status(201).json({
@@ -32,7 +26,8 @@ const userHandler = async (req, res) => {
           break;
 
         case "GET":
-          const user = await User.findOne({ userId }).clone();
+          console.log("userId", decoded);
+          const user = await User.findOne({ userId: username }).clone();
           res.status(200).json({
             ok: true,
             message: `User ${method}`,
@@ -41,7 +36,7 @@ const userHandler = async (req, res) => {
           break;
 
         case "PUT":
-          const updateUser = await User.findOne({ userId }).clone();
+          const updateUser = await User.findOne({ userId: username }).clone();
           if (updateUser) {
             Object.keys(req.body).forEach((key) => {
               updateUser[key] = req.body[key];
@@ -60,7 +55,9 @@ const userHandler = async (req, res) => {
           }
           break;
         case "DELETE":
-          const deletedUser = await User.findOneAndDelete({ userId }).clone();
+          const deletedUser = await User.findOneAndDelete({
+            userId: username,
+          }).clone();
           if (deletedUser) {
             res.status(200).json({
               ok: true,
@@ -83,7 +80,8 @@ const userHandler = async (req, res) => {
           break;
       }
     } catch (error) {
-      res.status(401).json({ message: 'Unauthorized' });
+      console.log("Error", error);
+      res.status(401).json({ message: error });
     }
   } catch (err) {
     res.status(500).json({
