@@ -7,8 +7,8 @@ const malkahanaEntryRangeSearchHandler = async (req, res) => {
     await dbConnect();
 
     const { method } = req || "GET";
-    const {dateOfFirFrom, dateOfFirTo, dateOfSeizureFrom, dateOfSeizureTo,dateFrom, dateTo,psName, district } = req.body;
-
+    const {dateOfFirFrom, dateOfFirTo, dateOfSeizureFrom, dateOfSeizureTo,dateFrom, dateTo,psName, district } = req.query;
+    console.log(req.query)
     // Authenticate the request
     const token = req.cookies.token;
     if (!token) {
@@ -27,8 +27,9 @@ const malkahanaEntryRangeSearchHandler = async (req, res) => {
           if (psName) searchCriteria.psName = { $regex: new RegExp(psName, 'i') }; // Case-insensitive search
           if (dateFrom && dateTo) searchCriteria.date = { $gte: new Date(dateFrom), $lte: new Date(dateTo) };
           if (district) searchCriteria.district = { $regex: new RegExp(district, 'i') }; // Case-insensitive search
-
+          console.log(searchCriteria)
           const entries = await MalkhanaEntry.find(searchCriteria);
+          console.log(entries)
           res.status(200).json({ entries });
           break;
 

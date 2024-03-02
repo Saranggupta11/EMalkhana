@@ -7,7 +7,7 @@ const malkahanaEntrySearchHandler = async (req, res) => {
     await dbConnect();
 
     const { method } = req || "GET";
-    const { mrNo, firNo, dateOfFir, dateOfSeizure, psName, date, state, district } = req.body;
+    const { mrNo, firNo, dateOfFir, dateOfSeizure, psName, date, state, district } = req.query;
 
     // Authenticate the request
     const token = req.cookies.token;
@@ -22,6 +22,7 @@ const malkahanaEntrySearchHandler = async (req, res) => {
       switch (method) {
         case "GET":
           const searchCriteria = {};
+          console.log(dateOfFir);
 
           if (mrNo) searchCriteria.mrNo = { $regex: new RegExp(mrNo, 'i') };
           if (firNo) searchCriteria.firNo = { $regex: new RegExp(firNo, 'i') };

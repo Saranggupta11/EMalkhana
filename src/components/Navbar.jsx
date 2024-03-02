@@ -10,109 +10,7 @@ import { TbReportAnalytics } from "react-icons/tb";
 import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiMessageSquare, FiFolder, FiShoppingCart } from "react-icons/fi";
 
-// export default function Navbar  () {
-//   const menus = [
-//     { name: "Home", link: "/", icon: MdOutlineDashboard },
-//     { name: "Add Entry", link: "/addproperty", icon: AiOutlineUser },
-//     { name: "Manage Entries", link: "/manageEnteries", icon: FiMessageSquare },
-//     { name: "Profile", link: "/profile", icon: TbReportAnalytics },
-//     { name: "File Manager", link: "/", icon: FiFolder },
-//     { name: "Cart", link: "/", icon: FiShoppingCart },
-//     { name: "Saved", link: "/", icon: AiOutlineHeart, margin: true },
-//     { name: "Setting", link: "/", icon: RiSettings4Line },
-//   ];
-//   const [open, setOpen] = useState(true);
-//   return (
-//     <section className="flex gap-6">
-//       <div
-//         className={`bg-[#0e0e0e] min-h-screen ${
-//           open ? "w-72" : "w-16"
-//         } duration-500 text-gray-100 px-4`}
-//       >
-//         <div className="py-3 flex justify-end">
-//           <HiMenuAlt3
-//             size={26}
-//             className="cursor-pointer"
-//             onClick={() => setOpen(!open)}
-//           />
-//         </div>
-//         <div className="mt-4 flex flex-col gap-4 relative">
-//           {menus?.map((menu, i) => (
-//             <Link
-//               href={menu?.link}
-//               key={i}
-//               className={` ${
-//                 menu?.margin && "mt-5"
-//               } group flex items-center text-sm  gap-3.5 font-medium p-2 hover:bg-gray-800 rounded-md`}
-//             >
-//               <div>{React.createElement(menu?.icon, { size: "20" })}</div>
-//               <h2
-//                 style={{
-//                   transitionDelay: `${i + 3}00ms`,
-//                 }}
-//                 className={`whitespace-pre duration-500 ${
-//                   !open && "opacity-0 translate-x-28 overflow-hidden"
-//                 }`}
-//               >
-//                 {menu?.name}
-//               </h2>
-//               <h2
-//                 className={`${
-//                   open && "hidden"
-//                 } absolute left-48 bg-white font-semibold whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit  `}
-//               >
-//                 {menu?.name}
-//               </h2>
-//             </Link>
-//           ))}
-//         </div>
-//       </div>
 
-//     </section>
-//   );
-// };
-
-// export default function Navbar() {
-//   return (
-//     <div>
-//       <div className="flex justify-center mt-10">
-//         <Image
-//              src="/images/logo.png"
-//              width={100}
-//              height={100}
-//              className="rounded-full mr-auto ml-auto"
-//              alt='Logo'
-//             />
-//         <div className="flex items-center">
-//         <div className="text-5xl font-black text-cente text-blue-600">
-//           Jharkhand Police E-Malkhana
-//         </div>
-//         </div>
-//         <Image
-//              src="/images/logo.png"
-//              width={100}
-//              height={100}
-//              className="rounded-full mr-auto ml-auto"
-//              alt='Logo'
-//             />
-//       </div>
-
-//       <div className="my-9 flex bg-blue-500 justify-center py-3 text-2xl">
-//         <div className="text-white mx-20 hover:text-yellow-300">
-//           <Link href="/">Home</Link>
-//           </div>
-//         <div className="text-white mx-20 hover:text-yellow-300">
-//           <Link href="/addproperty">Add Entry</Link></div>
-//         <div className="text-white mx-20 hover:text-yellow-300">
-//           <Link href="/manageEnteries">Manage Entries</Link>
-//         </div>
-//         <div className="text-white mx-20 hover:text-yellow-300">
-//           <Link href="/profile">Profile</Link>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }import React from "react";
 import AddEntryModal from "./AddEntryModal"; // Import your AddEntryModal component
 
 export default function Navbar() {
@@ -136,7 +34,6 @@ export default function Navbar() {
           </span>
         </Link>
         <span className="ml-2 font-semibold text-xl pl-10 text-black">
-          Cases: 12
         </span>
       </div>
 
