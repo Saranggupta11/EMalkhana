@@ -17,7 +17,7 @@ const malkahanaEntryHandler = async (req, res) => {
     // Authenticate the request
     const token = req.cookies.token;
     if (!token) {
-      return res.status(401).json({ message: 'Unauthorized' });
+      return res.status(409).json({ message: 'Unauthorized' });
     }
 
     try {
